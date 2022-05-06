@@ -1,9 +1,6 @@
 package com.zhuangxv.bot.core;
 
-import com.zhuangxv.bot.annotation.FriendMessageHandler;
-import com.zhuangxv.bot.annotation.GroupMessageHandler;
-import com.zhuangxv.bot.annotation.GroupRecallHandler;
-import com.zhuangxv.bot.annotation.TempMessageHandler;
+import com.zhuangxv.bot.annotation.*;
 import com.zhuangxv.bot.config.BotConfig;
 import com.zhuangxv.bot.config.PropertySourcesUtils;
 import com.zhuangxv.bot.core.framework.HandlerMethod;
@@ -19,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -59,12 +57,13 @@ public class BotFactory implements ApplicationContextAware, DisposableBean {
         Map<String, Object> beans = BotFactory.getApplicationContext().getBeansOfType(Object.class);
         handlerMethodMap = new HashMap<>();
         for (Object bean : beans.values()) {
-            Class<?> beanClass = bean.getClass();
+            Class<?> beanClass = ClassUtils.getUserClass(bean);
             Set<Method> methodSet = Arrays.stream(beanClass.getMethods()).filter(method ->
                     method.isAnnotationPresent(GroupMessageHandler.class)
                             || method.isAnnotationPresent(TempMessageHandler.class)
                             || method.isAnnotationPresent(FriendMessageHandler.class)
                             || method.isAnnotationPresent(GroupRecallHandler.class)
+                            || method.isAnnotationPresent(GroupUserAddHandler.class)
             ).collect(Collectors.toSet());
             methodSet.forEach(method -> {
                 HandlerMethod handlerMethod = new HandlerMethod() {
