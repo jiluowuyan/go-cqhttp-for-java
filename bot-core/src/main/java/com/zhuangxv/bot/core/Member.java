@@ -1,6 +1,5 @@
 package com.zhuangxv.bot.core;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhuangxv.bot.message.MessageChain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

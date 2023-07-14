@@ -1,5 +1,7 @@
 package com.zhuangxv.bot.annotation;
 
+import com.zhuangxv.bot.utilEnum.IgnoreItselfEnum;
+
 import java.lang.annotation.*;
 
 /**
@@ -27,5 +29,10 @@ public @interface FriendMessageHandler {
     long[] senderIds() default {};
 
     long[] excludeSenderIds() default {};
+
+    /**
+     * 忽略自身
+     */
+    IgnoreItselfEnum ignoreItself() default IgnoreItselfEnum.IGNORE_ITSELF;
 
 }

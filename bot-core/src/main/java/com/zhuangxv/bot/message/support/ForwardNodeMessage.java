@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.zhuangxv.bot.message.Message;
 import com.zhuangxv.bot.message.MessageChain;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author jiluo
@@ -15,7 +13,6 @@ import lombok.Setter;
 @Getter
 public class ForwardNodeMessage implements Message {
 
-    @Setter(AccessLevel.NONE)
     private String id;
 
     private String uin;

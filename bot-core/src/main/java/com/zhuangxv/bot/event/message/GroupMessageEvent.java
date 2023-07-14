@@ -38,9 +38,7 @@ public class GroupMessageEvent extends MessageEvent {
     private JSONObject sender;
 
     public static boolean isSupport(JSONObject jsonObject) {
-        return (("message".equals(jsonObject.getString("post_type"))
-                ||"message_sent".equals(jsonObject.getString("post_type")))
-                && "group".equals(jsonObject.getString("message_type")));
+        return ("group".equals(jsonObject.getString("message_type")));
     }
 
 }

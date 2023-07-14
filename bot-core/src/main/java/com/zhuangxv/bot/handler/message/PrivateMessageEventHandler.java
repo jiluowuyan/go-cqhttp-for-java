@@ -3,8 +3,8 @@ package com.zhuangxv.bot.handler.message;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuangxv.bot.annotation.FriendMessageHandler;
 import com.zhuangxv.bot.annotation.TempMessageHandler;
-import com.zhuangxv.bot.core.TempFriend;
 import com.zhuangxv.bot.core.Bot;
+import com.zhuangxv.bot.core.TempFriend;
 import com.zhuangxv.bot.core.component.BotFactory;
 import com.zhuangxv.bot.event.message.PrivateMessageEvent;
 import com.zhuangxv.bot.handler.EventHandler;
@@ -13,6 +13,7 @@ import com.zhuangxv.bot.message.Message;
 import com.zhuangxv.bot.message.MessageChain;
 import com.zhuangxv.bot.message.MessageTypeHandle;
 import com.zhuangxv.bot.util.ArrayUtils;
+import com.zhuangxv.bot.utilEnum.IgnoreItselfEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -63,6 +64,11 @@ public class PrivateMessageEventHandler implements EventHandler {
                 }
                 FriendMessageHandler friendMessageHandler = handlerMethod.getMethod().getAnnotation(FriendMessageHandler.class);
                 if (friendMessageHandler.bot() != 0 && friendMessageHandler.bot() != privateMessageEvent.getSelfId()) {
+                    return false;
+                }
+                if (friendMessageHandler.ignoreItself().equals(IgnoreItselfEnum.IGNORE_ITSELF) && "message_sent".equals(privateMessageEvent.getPostType())) {
+                    return false;
+                } else if (friendMessageHandler.ignoreItself().equals(IgnoreItselfEnum.ONLY_ITSELF) && !"message_sent".equals(privateMessageEvent.getPostType())) {
                     return false;
                 }
                 if (friendMessageHandler.senderIds().length > 0 && !ArrayUtils.contain(friendMessageHandler.senderIds(), privateMessageEvent.getUserId())) {

@@ -3,7 +3,6 @@ package com.zhuangxv.bot.event.message;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuangxv.bot.event.BaseEvent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -33,8 +32,7 @@ public class PrivateMessageEvent extends MessageEvent {
     private JSONObject sender;
 
     public static boolean isSupport(JSONObject jsonObject) {
-        return ("message".equals(jsonObject.getString("post_type"))
-                && "private".equals(jsonObject.getString("message_type")));
+        return ("private".equals(jsonObject.getString("message_type")));
     }
 
 }
