@@ -5,12 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhuangxv.bot.api.ApiResult;
 import com.zhuangxv.bot.api.support.*;
 import com.zhuangxv.bot.config.BotConfig;
-import com.zhuangxv.bot.core.component.BotDispatcher;
 import com.zhuangxv.bot.core.network.BotClient;
-import com.zhuangxv.bot.core.network.ws.WsBotClient;
 import com.zhuangxv.bot.exception.BotException;
 import com.zhuangxv.bot.message.CacheMessage;
 import com.zhuangxv.bot.message.MessageChain;
+import com.zhuangxv.bot.message.MessageTypeHandle;
 import com.zhuangxv.bot.message.support.ForwardNodeMessage;
 import lombok.extern.slf4j.Slf4j;
 
@@ -368,6 +367,24 @@ public class Bot {
         JSONObject jsonObject = this.getObject(apiResult.getData());
         this.botId = jsonObject.getLongValue("user_id");
         this.botName = jsonObject.getString("nickname");
+    }
+
+
+    public String getImageUrl(String imageId) {
+        ApiResult apiResult = this.botClient.invokeApi(new GetImage(imageId),this);
+        JSONObject object = this.getObject(apiResult.getData());
+        return object.getString("url");
+    }
+
+    public MessageChain getMsg(Integer messageId) {
+        ApiResult apiResult = this.botClient.invokeApi(new GetMsg(messageId),this);
+        JSONObject object = this.getObject(apiResult.getData());
+        MessageChain messageChain = new MessageChain();
+        JSONArray messageArray = object.getJSONArray("message");
+        for (int i = 0; i < messageArray.size(); i++) {
+            messageChain.add(MessageTypeHandle.getMessage(messageArray.getJSONObject(i)));
+        }
+        return messageChain;
     }
 
 }

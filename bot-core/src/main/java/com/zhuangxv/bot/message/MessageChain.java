@@ -40,6 +40,18 @@ public class MessageChain extends ArrayList<Message> {
         this.add(new ImageMessage(file));
         return this;
     }
+    public MessageChain imageBase64(String base64) {
+        ImageMessage imageMessage = new ImageMessage();
+        imageMessage.setFile("base64://"+base64);
+        this.add(imageMessage);
+        return this;
+    }
+    public MessageChain imageLocal(String path) {
+        ImageMessage imageMessage = new ImageMessage();
+        imageMessage.setFile("file:///"+path);
+        this.add(imageMessage);
+        return this;
+    }
 
     public MessageChain reply(int messageId) {
         this.add(new ReplyMessage(messageId));

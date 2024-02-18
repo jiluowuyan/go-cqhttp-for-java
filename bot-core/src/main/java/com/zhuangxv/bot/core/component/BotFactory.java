@@ -67,7 +67,8 @@ public class BotFactory implements ApplicationContextAware, DisposableBean {
                             || method.isAnnotationPresent(TempMessageHandler.class)
                             || method.isAnnotationPresent(FriendMessageHandler.class)
                             || method.isAnnotationPresent(GroupRecallHandler.class)
-                            || method.isAnnotationPresent(MemberAddHandler.class)
+                            || method.isAnnotationPresent(GroupIncreaseHandler.class)
+                            || method.isAnnotationPresent(GroupDecreaseHandler.class)
             ).collect(Collectors.toSet());
             methodSet.forEach(method -> {
                 HandlerMethod handlerMethod = new HandlerMethod() {

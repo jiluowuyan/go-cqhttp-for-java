@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface MemberAddHandler {
+public @interface GroupIncreaseHandler {
 
     /**
      * 限制bot 参数为bot qq  0为不限制

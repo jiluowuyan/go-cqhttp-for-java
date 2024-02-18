@@ -14,7 +14,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class MemberAddEvent extends BaseEvent {
+public class GroupIncreaseEvent extends BaseEvent {
 
     @JSONField(name = "notice_type")
     private String noticeType;
